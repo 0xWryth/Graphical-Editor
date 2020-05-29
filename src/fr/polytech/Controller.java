@@ -10,9 +10,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -79,7 +76,9 @@ public class Controller implements Initializable {
                 this.canvaObj.get(lastDrawnId).updatePoints(firstPoint, secondPoint);
             }
             else {
-                String shape = this.mode.equals("rectangleRadio") ? "rectangle" : this.mode.equals("lineRadio") ? "line" : "";
+                String shape = this.mode.equals("rectangleRadio") ? "rectangle" :
+                        this.mode.equals("lineRadio") ? "line" :
+                        this.mode.equals("ellipseRadio") ? "ellipse" : "";
                 if (!shape.equals(""))
                 {
                     CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint);

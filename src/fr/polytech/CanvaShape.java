@@ -31,6 +31,9 @@ public class CanvaShape {
         else if (shape.equals("rectangle")) {
             drawingRectangle(gc);
         }
+        else if (shape.equals("ellipse")) {
+            drawingEllipse(gc);
+        }
     }
 
     private void drawingLine(GraphicsContext gc) {
@@ -51,5 +54,12 @@ public class CanvaShape {
         drawingLine(gc, upperRight, secondPoint);
         drawingLine(gc, firstPoint, lowerLeft);
         drawingLine(gc, lowerLeft, secondPoint);
+    }
+
+    private void drawingEllipse(GraphicsContext gc) {
+        final double lowerX = Math.min(firstPoint.getX(), secondPoint.getX());
+        final double higherX = Math.max(firstPoint.getX(), secondPoint.getX());
+
+        gc.strokeOval(firstPoint.getX(), firstPoint.getY(), higherX-lowerX, higherX-lowerX);
     }
 }

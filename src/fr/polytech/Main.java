@@ -23,7 +23,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             // Localisation du fichier FXML.
-            final URL url = getClass().getResource("gui.fxml");
+            final URL url = getClass().getResource("./View/gui.fxml");
             // Création du loader.
             final FXMLLoader fxmlLoader = new FXMLLoader(url);
             // Chargement du FXML.

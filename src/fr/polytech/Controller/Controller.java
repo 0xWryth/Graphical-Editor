@@ -1,5 +1,7 @@
-package fr.polytech;
+package fr.polytech.Controller;
 
+import fr.polytech.Model.CanvaShape;
+import fr.polytech.Model.History;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,12 +11,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -34,7 +37,9 @@ public class Controller implements Initializable {
     private Color filingColor;
 
     private ArrayList<CanvaShape> canvaObj = new ArrayList<CanvaShape>();
-    private int lastDrawnId = 0;
+    private Integer lastDrawnId = 0;
+
+    private History history = new History();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -86,26 +91,16 @@ public class Controller implements Initializable {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         for (CanvaShape o : canvaObj) {
-            o.drawingShape(gc);
+            if (o != null) {
+                o.drawingShape(gc);
+            }
         }
     }
 
     private void addingShape() {
         if (this.captureMousePos) {
-            // If the captured object is already added
-            if (canvaObj.size() - 1 == this.lastDrawnId) {
-                this.canvaObj.get(lastDrawnId).updatePoints(firstPoint, secondPoint);
-            }
-            else {
-                String shape = this.mode.equals("rectangleRadio") ? "rectangle" :
-                        this.mode.equals("lineRadio") ? "line" :
-                        this.mode.equals("ellipseRadio") ? "ellipse" : "";
-                if (!shape.equals(""))
-                {
-                    CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint, filingColor);
-                    this.canvaObj.add(cs);
-                }
-            }
+            Object[] data = {"adding", this.canvaObj, this.lastDrawnId, this.mode, firstPoint, secondPoint, filingColor};
+            history.adding(data);
         }
     }
 
@@ -113,9 +108,9 @@ public class Controller implements Initializable {
         this.filingColor = colorPicker.getValue();
         System.out.println("Switching to : " + colorPicker.getValue());
 
-        for (CanvaShape o : canvaObj) {
-            o.setFilingColor(canvas.getGraphicsContext2D(), colorPicker.getValue());
-        }
+        Object[] data = {"colorChanging", this.canvaObj, this.lastDrawnId, canvas.getGraphicsContext2D(), this.filingColor};
+        this.canvaObj = history.colorChanging(data);
+        drawing();
     }
 
     private void movingShape() {
@@ -128,46 +123,27 @@ public class Controller implements Initializable {
     }
 
     public void deleteShape(ActionEvent actionEvent) {
-        ArrayList<Integer> toDelete = new ArrayList<Integer>();
-        for (CanvaShape o : canvaObj) {
-            if (o.isSelected()) {
-                toDelete.add(o.getId());
-            }
-        }
-
-        ArrayList<CanvaShape> newCanvaObj = new ArrayList<CanvaShape>();
-        int i = 0;
-        for (CanvaShape canvaShape : canvaObj) {
-            boolean flag = false;
-            int index = 0;
-            while (flag == false && index < toDelete.size()) {
-                if (canvaShape.getId() == toDelete.get(index)) {
-                    flag = true;
-                }
-                index++;
-            }
-
-            if (!flag) {
-                newCanvaObj.add(canvaShape);
-            }
-            i++;
-        }
-
-        this.canvaObj = newCanvaObj;
+        Object[] data = {"deleting", this.canvaObj, this.lastDrawnId, this.mode, firstPoint, secondPoint};
+        this.canvaObj = history.deleting(data);
         drawing();
     }
 
     public void cloneShape(ActionEvent actionEvent) {
-        ArrayList<CanvaShape> futureCanvaObj = new ArrayList<CanvaShape>();
-        for (CanvaShape o : canvaObj) {
-            if (o.isSelected()) {
-                CanvaShape cs = new CanvaShape(o, this.lastDrawnId);
-                futureCanvaObj.add(cs);
-                this.lastDrawnId++;
-            }
-        }
-
-        this.canvaObj.addAll(futureCanvaObj);
+        Object[] data = {"cloning", canvaObj, lastDrawnId};
+        history.clone(data);
         drawing();
+    }
+
+    public void keyTyped(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.Z && keyEvent.isControlDown()) {
+            System.out.println("CTRL + Z !");
+            canvaObj = history.undo();
+            drawing();
+        }
+        else if (keyEvent.getCode() == KeyCode.Y && keyEvent.isControlDown()) {
+            System.out.println("CTRL + Y !");
+            canvaObj = history.redo();
+            drawing();
+        }
     }
 }

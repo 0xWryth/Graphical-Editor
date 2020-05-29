@@ -14,10 +14,10 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.polytech.Controller">
     <children>
-        <VBox prefHeight="400.0" prefWidth="136.0">
+        <VBox prefHeight="400.0" prefWidth="150.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="136.0" style="-fx-background-color: lightgrey;" text="Options" />
-                <Separator prefWidth="200.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="150.0" style="-fx-background-color: lightgrey;" text="Options" />
+                <Separator prefWidth="150.0" />
                 <RadioButton fx:id="selectMoveRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Select / Move" VBox.vgrow="ALWAYS">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
@@ -29,8 +29,8 @@
                         <ToggleGroup fx:id="control" />
                     </toggleGroup>
                 </RadioButton>
-                <Separator prefWidth="200.0" />
-                <RadioButton fx:id="ellipseRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Ellipse" toggleGroup="$control">
+                <Separator prefWidth="150.0" />
+                <RadioButton fx:id="ellipseRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Ellipse" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -38,7 +38,7 @@
                         <Insets left="10.0" right="10.0" />
                     </VBox.margin>
                 </RadioButton>
-                <RadioButton fx:id="rectangleRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Rectangle" toggleGroup="$control">
+                <RadioButton fx:id="rectangleRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Rectangle" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -46,7 +46,7 @@
                         <Insets left="10.0" right="10.0" />
                     </VBox.margin>
                 </RadioButton>
-                <RadioButton fx:id="lineRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Line" toggleGroup="$control">
+                <RadioButton fx:id="lineRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="150.0" text="Line" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -54,19 +54,19 @@
                         <Insets left="10.0" right="10.0" />
                     </VBox.margin>
                 </RadioButton>
-                <Separator prefWidth="200.0" />
+                <Separator prefWidth="150.0" />
                 <ColorPicker fx:id="colorPicker" onAction="#picker">
                     <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                     </VBox.margin>
                 </ColorPicker>
-                <Separator prefWidth="200.0" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Delete" VBox.vgrow="ALWAYS" onAction="#deleteShape">
+                <Separator prefWidth="150.0" />
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Delete" VBox.vgrow="ALWAYS" onAction="#deleteShape">
                     <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Clone">
+                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Clone" onAction="#cloneShape">
                     <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                     </VBox.margin>
@@ -74,6 +74,6 @@
             </children>
         </VBox>
         <Separator orientation="VERTICAL" prefHeight="200.0" />
-        <Canvas fx:id="canvas" height="401.0" width="684.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onMouseDragged="#mouseDragged"/>
+        <Canvas fx:id="canvas" height="401.0" width="650.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onMouseDragged="#mouseDragged"/>
     </children>
 </HBox>

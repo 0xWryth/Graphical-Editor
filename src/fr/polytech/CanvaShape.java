@@ -14,12 +14,20 @@ public class CanvaShape {
     Color filingColor;
     boolean selected = false;
 
+    private final static double clonedOffset = 10.0;
+
     public CanvaShape(int id, String shape, Point3D firstPoint, Point3D secondPoint, Color filingColor) {
         this.id = id;
         this.shape = shape;
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
         this.filingColor = filingColor;
+    }
+
+    public CanvaShape(CanvaShape cs, int id) {
+        this(id, cs.shape, new Point3D(cs.firstPoint.getX() + clonedOffset, cs.firstPoint.getY() + clonedOffset, 0),
+                new Point3D(cs.secondPoint.getX() + clonedOffset, cs.secondPoint.getY() + clonedOffset, 0),
+                cs.filingColor);
     }
 
     public void updatePoints(Point3D a, Point3D b) {

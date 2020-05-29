@@ -156,4 +156,18 @@ public class Controller implements Initializable {
         this.canvaObj = newCanvaObj;
         drawing();
     }
+
+    public void cloneShape(ActionEvent actionEvent) {
+        ArrayList<CanvaShape> futureCanvaObj = new ArrayList<CanvaShape>();
+        for (CanvaShape o : canvaObj) {
+            if (o.isSelected()) {
+                CanvaShape cs = new CanvaShape(o, this.lastDrawnId);
+                futureCanvaObj.add(cs);
+                this.lastDrawnId++;
+            }
+        }
+
+        this.canvaObj.addAll(futureCanvaObj);
+        drawing();
+    }
 }

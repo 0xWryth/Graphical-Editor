@@ -11,24 +11,36 @@ import java.net.URL;
 
 public class Main extends Application {
 
+    /**
+     * Launch JavaFX Application
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Starting JavaFX application
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            // Localisation du fichier FXML.
+            // Setting FXML file URL
             final URL url = getClass().getResource("./View/gui.fxml");
-            // Création du loader.
+
+            // Loading FXML file
             final FXMLLoader fxmlLoader = new FXMLLoader(url);
-            // Chargement du FXML.
+
+            // Creating GUI root
             final HBox root = (HBox) fxmlLoader.load();
-            // Création de la scène.
+
+            // Creating JAVAFX Scene
             final Scene scene = new Scene(root, 800, 400);
             primaryStage.setScene(scene);
         } catch (IOException ex) {
-            System.err.println("Erreur au chargement: " + ex);
+            System.err.println("Loading error: " + ex);
         }
         primaryStage.setTitle("Graphical Editor");
 

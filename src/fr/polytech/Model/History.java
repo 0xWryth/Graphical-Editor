@@ -8,11 +8,21 @@ public class History {
     private ArrayList<Task> history;
     private ArrayList<Task> redoTasks;
 
+    /**
+     * History constructor
+     */
     public History() {
         history = new ArrayList<>();
         redoTasks = new ArrayList<>();
     }
 
+    // Methods
+
+    /**
+     * Adding / Modifying a task in the history
+     * @param t the task to add
+     * @param i some shape id
+     */
     private void addTaskToHistory(Task t, Integer i) {
         Integer found = null;
         int index = 0;
@@ -32,6 +42,12 @@ public class History {
         redoTasks = new ArrayList<>();
     }
 
+    // Tasks
+
+    /**
+     * Cloning some shape
+     * @param data
+     */
     public void clone(Object[] data) {
         Task t = new Clone();
         t.execute(data);
@@ -41,6 +57,10 @@ public class History {
         }
     }
 
+    /**
+     * Adding a new shape
+     * @param data
+     */
     public void adding(Object[] data) {
         Task t = new Adding();
         t.execute(data);
@@ -50,6 +70,11 @@ public class History {
         }
     }
 
+    /**
+     * Deleting a shaoe
+     * @param data
+     * @return new app data
+     */
     public ArrayList<CanvaShape> deleting(Object[] data) {
         Task t = new DeleteShape();
         t.execute(data);
@@ -61,6 +86,11 @@ public class History {
         return new ArrayList<CanvaShape>();
     }
 
+    /**
+     * Changing a shape color
+     * @param data
+     * @return new app data
+     */
     public ArrayList<CanvaShape> colorChanging(Object[] data) {
         Task t = new ColorChange();
         t.execute(data);
@@ -72,6 +102,12 @@ public class History {
         return new ArrayList<CanvaShape>();
     }
 
+    // Control functions
+
+    /**
+     * Undoing previous action
+     * @return new app objects data
+     */
     public ArrayList<CanvaShape> undo() {
         if (history.size() > 0) {
             System.out.println(history.size());
@@ -89,6 +125,10 @@ public class History {
         return new ArrayList<CanvaShape>();
     }
 
+    /**
+     * Redoing last action which had been undo
+     * @return new app objects data
+     */
     public ArrayList<CanvaShape> redo() {
         if (redoTasks.size() > 0) {
             try {

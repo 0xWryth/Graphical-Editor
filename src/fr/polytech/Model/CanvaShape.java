@@ -6,16 +6,24 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class CanvaShape {
-    int id;
-    String shape;
-    Point3D firstPoint;
-    Point3D secondPoint;
-    double difX = 0, difY = 0;
-    Color filingColor;
-    boolean selected = false;
+    private int id;
+    private String shape;
+    private Point3D firstPoint;
+    private Point3D secondPoint;
+    private double difX = 0, difY = 0;
+    private Color filingColor;
+    private boolean selected = false;
 
     private final static double clonedOffset = 10.0;
 
+    /**
+     * CanvaShape Constructor
+     * @param id
+     * @param shape
+     * @param firstPoint
+     * @param secondPoint
+     * @param filingColor
+     */
     public CanvaShape(int id, String shape, Point3D firstPoint, Point3D secondPoint, Color filingColor) {
         this.id = id;
         this.shape = shape;
@@ -24,17 +32,53 @@ public class CanvaShape {
         this.filingColor = filingColor;
     }
 
+    /**
+     * Copying a shape - for cloning purpose
+     * @param cs
+     * @param id
+     */
     public CanvaShape(CanvaShape cs, int id) {
         this(id, cs.shape, new Point3D(cs.firstPoint.getX() + clonedOffset, cs.firstPoint.getY() + clonedOffset, 0),
                 new Point3D(cs.secondPoint.getX() + clonedOffset, cs.secondPoint.getY() + clonedOffset, 0),
                 cs.filingColor);
     }
 
+    // Getters
+
+    /**
+     * Getting if a shape is selected or not
+     * @return
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
+     * Getting the shape id
+     * @return
+     */
+    public int getId() {
+        return id;
+    }
+
+    // Setters
+
+    /**
+     * Points setter
+     * @param a
+     * @param b
+     */
     public void updatePoints(Point3D a, Point3D b) {
         this.firstPoint = a;
         this.secondPoint = b;
     }
 
+    // Draw methods
+
+    /**
+     * Entrypoint to draw a shape
+     * @param gc
+     */
     public void drawingShape(GraphicsContext gc) {
         if (shape.equals("line")) {
             drawingLine(gc);
@@ -47,6 +91,10 @@ public class CanvaShape {
         }
     }
 
+    /**
+     * Drawing line function
+     * @param gc
+     */
     private void drawingLine(GraphicsContext gc) {
         Color c = this.selected ? Color.BLUE : filingColor;
         Point3D fP = new Point3D(firstPoint.getX() - difX, firstPoint.getY() - difY, 0);
@@ -54,6 +102,13 @@ public class CanvaShape {
         drawingLine(gc, fP, sP, c);
     }
 
+    /**
+     * Drawing a line from point a to point b with strokeColor color
+     * @param gc
+     * @param a
+     * @param b
+     * @param strokeColor
+     */
     private void drawingLine(GraphicsContext gc, Point3D a, Point3D b, Color strokeColor) {
         gc.beginPath();
         gc.setStroke(strokeColor);
@@ -63,6 +118,10 @@ public class CanvaShape {
         gc.setStroke(Color.BLACK);
     }
 
+    /**
+     * Drawing a rectangle function
+     * @param gc
+     */
     private void drawingRectangle(GraphicsContext gc) {
         final double lowerX = Math.min(firstPoint.getX() - difX, secondPoint.getX() - difX);
         final double higherX = Math.max(firstPoint.getX() - difX, secondPoint.getX() - difX);
@@ -87,6 +146,10 @@ public class CanvaShape {
         drawingLine(gc, D, A, c);
     }
 
+    /**
+     * Drawing an ellipse function
+     * @param gc
+     */
     private void drawingEllipse(GraphicsContext gc) {
         final double lowerX = Math.min(firstPoint.getX() - difX, secondPoint.getX() - difX);
         final double higherX = Math.max(firstPoint.getX() - difX, secondPoint.getX() - difX);
@@ -102,6 +165,11 @@ public class CanvaShape {
         gc.setStroke(Color.BLACK);
     }
 
+    /**
+     * Shape selection function
+     * @param gc
+     * @param point
+     */
     public void selectShape(GraphicsContext gc, Point3D point) {
         if (this.shape.equals("rectangle")) {
             final double lowerX = Math.min(firstPoint.getX() - difX, secondPoint.getX() - difX);
@@ -158,6 +226,12 @@ public class CanvaShape {
         drawingShape(gc);
     }
 
+    /**
+     * Moving shape function
+     * @param gc
+     * @param difX
+     * @param difY
+     */
     public void moveShape(GraphicsContext gc, double difX, double difY) {
         if (this.selected) {
             this.difX = difX;
@@ -165,6 +239,9 @@ public class CanvaShape {
         }
     }
 
+    /**
+     * Updating final position after a shape movement
+     */
     public void updateDif() {
         this.firstPoint = new Point3D(firstPoint.getX() - difX, firstPoint.getY() - difY, 0);
         this.secondPoint = new Point3D(secondPoint.getX() - difX, secondPoint.getY() - difY, 0);
@@ -173,18 +250,15 @@ public class CanvaShape {
         this.selected = false;
     }
 
+    /**
+     * Setting Selected indicator
+     * @param gc
+     * @param c
+     */
     public void setFilingColor(GraphicsContext gc, Color c) {
         if (this.selected) {
             this.filingColor = c;
             drawingShape(gc);
         }
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public int getId() {
-        return id;
     }
 }

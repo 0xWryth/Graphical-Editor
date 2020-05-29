@@ -28,7 +28,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         try {
             // Setting FXML file URL
-            final URL url = getClass().getResource("./View/gui.fxml");
+            final URL url = getClass().getResource("/fr/polytech/View/gui.fxml");
 
             // Loading FXML file
             final FXMLLoader fxmlLoader = new FXMLLoader(url);

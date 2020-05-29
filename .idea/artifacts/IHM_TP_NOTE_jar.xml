@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IHM-TP-NOTE:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IHM_TP_NOTE_jar</output-path>
+    <root id="archive" name="IHM-TP-NOTE.jar">
+      <element id="module-output" name="IHM-TP-NOTE" />
+    </root>
+  </artifact>
+</component>

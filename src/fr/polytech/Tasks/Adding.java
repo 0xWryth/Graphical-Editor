@@ -74,7 +74,12 @@ public class Adding implements Task{
     }
 
     @Override
-    public int getId() {
-        return id;
+    public String getId() {
+        return id + "A";
+    }
+
+    @Override
+    public String getType() {
+        return "adding";
     }
 }

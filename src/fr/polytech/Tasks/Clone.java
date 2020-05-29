@@ -5,7 +5,7 @@ import fr.polytech.CanvaShape;
 import java.util.ArrayList;
 
 public class Clone implements Task {
-    public int id;
+    public String id;
     private ArrayList<Integer> addedIndex = new ArrayList<Integer>();
     ArrayList<CanvaShape> oldCanvaObj = new ArrayList<>();
     ArrayList<CanvaShape> canvaObj;
@@ -35,7 +35,7 @@ public class Clone implements Task {
             ArrayList<CanvaShape> futureCanvaObj = new ArrayList<CanvaShape>();
             canvaObj = (ArrayList<CanvaShape>) data[1];
             Integer lastDrawnId = (Integer) data[2];
-            id = lastDrawnId;
+            id = lastDrawnId.toString();
             for (CanvaShape canvaShape : canvaObj) {
                 oldCanvaObj.add(canvaShape);
             }
@@ -68,7 +68,12 @@ public class Clone implements Task {
     }
 
     @Override
-    public int getId() {
-        return id;
+    public String getId() {
+        return id + "C";
+    }
+
+    @Override
+    public String getType() {
+        return "cloning";
     }
 }

@@ -8,5 +8,6 @@ public interface Task {
     public void execute(Object[] data);
     public ArrayList<CanvaShape> undo();
     public void redo();
-    public int getId();
+    public String getId();
+    public String getType();
 }

@@ -5,8 +5,6 @@ import fr.polytech.Tasks.Clone;
 import fr.polytech.Tasks.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.SortedMap;
 
 public class History {
     private ArrayList<Task> history;
@@ -19,7 +17,8 @@ public class History {
         Integer found = null;
         int index = 0;
         for (Task task : history) {
-            if (task.getId() == i) {
+            String id = i.toString() + (t.getType().equals("adding") ? "A" : t.getType().equals("cloning") ? "C" : "");
+            if (task.getId().equals(id)) {
                 found = index;
             }
             index++;

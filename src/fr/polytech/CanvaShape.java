@@ -171,4 +171,12 @@ public class CanvaShape {
             drawingShape(gc);
         }
     }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

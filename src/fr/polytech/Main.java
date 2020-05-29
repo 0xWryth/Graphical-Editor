@@ -3,6 +3,8 @@ package fr.polytech;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -33,6 +35,7 @@ public class Main extends Application {
             System.err.println("Erreur au chargement: " + ex);
         }
         primaryStage.setTitle("Graphical Editor");
+
         primaryStage.show();
     }
 }

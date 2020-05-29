@@ -12,14 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.polytech.Controller">
     <children>
         <VBox prefHeight="400.0" prefWidth="136.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="136.0" text="Options" />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="136.0" style="-fx-background-color: lightgrey;" text="Options" />
                 <Separator prefWidth="200.0" />
-                <RadioButton depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Select / Move" VBox.vgrow="ALWAYS">
+                <RadioButton fx:id="selectMoveRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Select / Move" VBox.vgrow="ALWAYS">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -31,7 +30,7 @@
                     </toggleGroup>
                 </RadioButton>
                 <Separator prefWidth="200.0" />
-                <RadioButton depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Ellipse" toggleGroup="$control">
+                <RadioButton fx:id="ellipseRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Ellipse" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -39,7 +38,7 @@
                         <Insets left="10.0" right="10.0" />
                     </VBox.margin>
                 </RadioButton>
-                <RadioButton depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Rectangle" toggleGroup="$control">
+                <RadioButton fx:id="rectangleRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Rectangle" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>
@@ -47,7 +46,7 @@
                         <Insets left="10.0" right="10.0" />
                     </VBox.margin>
                 </RadioButton>
-                <RadioButton depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Line" toggleGroup="$control">
+                <RadioButton fx:id="lineRadio" onAction="#setMode" depthTest="DISABLE" mnemonicParsing="false" prefHeight="34.0" prefWidth="137.0" text="Line" toggleGroup="$control">
                     <opaqueInsets>
                         <Insets left="10.0" right="10.0" />
                     </opaqueInsets>

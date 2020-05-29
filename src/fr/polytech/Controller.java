@@ -1,7 +1,5 @@
 package fr.polytech;
 
-import fr.polytech.Tasks.Adding;
-import fr.polytech.Tasks.Clone;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -108,9 +106,9 @@ public class Controller implements Initializable {
         this.filingColor = colorPicker.getValue();
         System.out.println("Switching to : " + colorPicker.getValue());
 
-        for (CanvaShape o : canvaObj) {
-            o.setFilingColor(canvas.getGraphicsContext2D(), colorPicker.getValue());
-        }
+        Object[] data = {"colorChanging", this.canvaObj, this.lastDrawnId, canvas.getGraphicsContext2D(), this.filingColor};
+        this.canvaObj = history.colorChanging(data);
+        drawing();
     }
 
     private void movingShape() {

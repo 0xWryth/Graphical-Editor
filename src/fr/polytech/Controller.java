@@ -8,13 +8,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -56,7 +56,8 @@ public class Controller implements Initializable {
     public void mouseDragged(MouseEvent mouseEvent) {
         secondPoint = new Point3D(mouseEvent.getX(), mouseEvent.getY(), 0);
 
-        addingLineShape();
+        addingShape();
+
         drawing();
     }
 
@@ -71,16 +72,19 @@ public class Controller implements Initializable {
         }
     }
 
-    private void addingLineShape() {
+    private void addingShape() {
         if (this.captureMousePos) {
             // If the captured object is already added
             if (canvaObj.size() - 1 == this.lastDrawnId) {
-                this.canvaObj.get(lastDrawnId).updateShape(firstPoint, secondPoint);
+                this.canvaObj.get(lastDrawnId).updatePoints(firstPoint, secondPoint);
             }
             else {
-                Line2D line = new Line2D.Double(firstPoint.getX(), firstPoint.getY(), secondPoint.getX(), secondPoint.getY());
-                CanvaShape cs = new CanvaShape(lastDrawnId, line, firstPoint, secondPoint);
-                this.canvaObj.add(cs);
+                String shape = this.mode.equals("rectangleRadio") ? "rectangle" : this.mode.equals("lineRadio") ? "line" : "";
+                if (!shape.equals(""))
+                {
+                    CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint);
+                    this.canvaObj.add(cs);
+                }
             }
         }
     }

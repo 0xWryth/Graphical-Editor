@@ -1,4 +1,4 @@
-package fr.polytech;
+package fr.polytech.Model;
 
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.GraphicsContext;

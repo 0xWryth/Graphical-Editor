@@ -1,6 +1,6 @@
-package fr.polytech.Tasks;
+package fr.polytech.Model.Tasks;
 
-import fr.polytech.CanvaShape;
+import fr.polytech.Model.CanvaShape;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ public class Move implements Task {
     }
 
     @Override
-    public void redo() {
-
+    public ArrayList<CanvaShape> redo() {
+        return null;
     }
 
     @Override

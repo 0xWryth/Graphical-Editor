@@ -1,8 +1,7 @@
-package fr.polytech.Tasks;
+package fr.polytech.Model.Tasks;
 
-import fr.polytech.CanvaShape;
+import fr.polytech.Model.CanvaShape;
 import javafx.geometry.Point3D;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -80,8 +79,8 @@ public class DeleteShape implements Task {
     }
 
     @Override
-    public void redo() {
-
+    public ArrayList<CanvaShape> redo() {
+        return canvaObj;
     }
 
     @Override

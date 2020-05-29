@@ -1,7 +1,6 @@
-package fr.polytech.Tasks;
+package fr.polytech.Model.Tasks;
 
-import fr.polytech.CanvaShape;
-import javafx.geometry.Point3D;
+import fr.polytech.Model.CanvaShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -56,8 +55,8 @@ public class ColorChange implements Task {
     }
 
     @Override
-    public void redo() {
-
+    public ArrayList<CanvaShape> redo() {
+        return canvaObj;
     }
 
     @Override

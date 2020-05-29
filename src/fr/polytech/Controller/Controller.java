@@ -1,5 +1,7 @@
-package fr.polytech;
+package fr.polytech.Controller;
 
+import fr.polytech.Model.CanvaShape;
+import fr.polytech.Model.History;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -136,6 +138,11 @@ public class Controller implements Initializable {
         if (keyEvent.getCode() == KeyCode.Z && keyEvent.isControlDown()) {
             System.out.println("CTRL + Z !");
             canvaObj = history.undo();
+            drawing();
+        }
+        else if (keyEvent.getCode() == KeyCode.Y && keyEvent.isControlDown()) {
+            System.out.println("CTRL + Y !");
+            canvaObj = history.redo();
             drawing();
         }
     }

@@ -1,14 +1,16 @@
-package fr.polytech;
+package fr.polytech.Model;
 
-import fr.polytech.Tasks.*;
+import fr.polytech.Model.Tasks.*;
 
 import java.util.ArrayList;
 
 public class History {
     private ArrayList<Task> history;
+    private ArrayList<Task> redoTasks;
 
     public History() {
         history = new ArrayList<>();
+        redoTasks = new ArrayList<>();
     }
 
     private void addTaskToHistory(Task t, Integer i) {
@@ -27,6 +29,7 @@ public class History {
         } else {
             history.set(found, t);
         }
+        redoTasks = new ArrayList<>();
     }
 
     public void clone(Object[] data) {
@@ -75,7 +78,24 @@ public class History {
             try {
                 Task t = history.get(history.size() - 1);
                 ArrayList<CanvaShape> res = t.undo();
+                redoTasks.add(t);
                 history.remove(history.size() - 1);
+                return res;
+            }
+            catch (Exception e) {
+                return new ArrayList<CanvaShape>();
+            }
+        }
+        return new ArrayList<CanvaShape>();
+    }
+
+    public ArrayList<CanvaShape> redo() {
+        if (redoTasks.size() > 0) {
+            try {
+                Task t = redoTasks.get(0);
+                ArrayList<CanvaShape> res = t.redo();
+                history.add(t);
+                redoTasks.remove(0);
                 return res;
             }
             catch (Exception e) {

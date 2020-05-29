@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import fr.polytech.Tasks.Clone;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +35,7 @@ public class Controller implements Initializable {
     private Color filingColor;
 
     private ArrayList<CanvaShape> canvaObj = new ArrayList<CanvaShape>();
-    private int lastDrawnId = 0;
+    private Integer lastDrawnId = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -158,16 +159,8 @@ public class Controller implements Initializable {
     }
 
     public void cloneShape(ActionEvent actionEvent) {
-        ArrayList<CanvaShape> futureCanvaObj = new ArrayList<CanvaShape>();
-        for (CanvaShape o : canvaObj) {
-            if (o.isSelected()) {
-                CanvaShape cs = new CanvaShape(o, this.lastDrawnId);
-                futureCanvaObj.add(cs);
-                this.lastDrawnId++;
-            }
-        }
-
-        this.canvaObj.addAll(futureCanvaObj);
+        Object[] data = {"cloning", canvaObj, lastDrawnId};
+        (new Clone()).execute(data);
         drawing();
     }
 }

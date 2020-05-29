@@ -131,9 +131,9 @@ public class Controller implements Initializable {
     public void mouseDragged(MouseEvent mouseEvent) {
         secondPoint = new Point3D(mouseEvent.getX(), mouseEvent.getY(), 0);
 
+        drawing();
         movingShape();
         addingShape();
-        drawing();
     }
 
     // > Canva drawing function

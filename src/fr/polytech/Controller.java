@@ -6,9 +6,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,16 +23,22 @@ public class Controller implements Initializable {
     @FXML
     private Canvas canvas;
 
+    @FXML
+    private ColorPicker colorPicker;
+
     private String mode = "";
     private boolean captureMousePos = false;
     private Point3D firstPoint;
     private Point3D secondPoint;
+    private Color filingColor;
 
     private ArrayList<CanvaShape> canvaObj = new ArrayList<CanvaShape>();
     private int lastDrawnId = 0;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(URL location, ResourceBundle resources) {
+        filingColor = colorPicker.getValue();
+    }
 
     public void setMode(ActionEvent actionEvent) {
         RadioButton rb = (RadioButton) control.getSelectedToggle();
@@ -81,10 +89,15 @@ public class Controller implements Initializable {
                         this.mode.equals("ellipseRadio") ? "ellipse" : "";
                 if (!shape.equals(""))
                 {
-                    CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint);
+                    CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint, filingColor);
                     this.canvaObj.add(cs);
                 }
             }
         }
+    }
+
+    public void picker(ActionEvent actionEvent) {
+        this.filingColor = colorPicker.getValue();
+        System.out.println("Switching to : " + colorPicker.getValue());
     }
 }

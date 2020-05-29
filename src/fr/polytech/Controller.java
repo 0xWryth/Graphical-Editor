@@ -111,6 +111,10 @@ public class Controller implements Initializable {
     public void picker(ActionEvent actionEvent) {
         this.filingColor = colorPicker.getValue();
         System.out.println("Switching to : " + colorPicker.getValue());
+
+        for (CanvaShape o : canvaObj) {
+            o.setFilingColor(canvas.getGraphicsContext2D(), colorPicker.getValue());
+        }
     }
 
     private void movingShape() {

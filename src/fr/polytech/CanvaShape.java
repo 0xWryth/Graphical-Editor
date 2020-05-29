@@ -164,4 +164,11 @@ public class CanvaShape {
         this.difX = 0;
         this.selected = false;
     }
+
+    public void setFilingColor(GraphicsContext gc, Color c) {
+        if (this.selected) {
+            this.filingColor = c;
+            drawingShape(gc);
+        }
+    }
 }

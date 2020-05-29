@@ -88,7 +88,10 @@ public class CanvaShape {
         gc.fillOval(firstPoint.getX() - difX, firstPoint.getY() - difY, higherX-lowerX, higherX-lowerX);
         gc.setFill(def);
 
+        Color c = this.selected ? Color.BLUE : Color.BLACK;
+        gc.setStroke(c);
         gc.strokeOval(firstPoint.getX() - difX, firstPoint.getY() - difY, higherX-lowerX, higherX-lowerX);
+        gc.setStroke(Color.BLACK);
     }
 
     public void selectShape(GraphicsContext gc, Point3D point) {
@@ -126,6 +129,23 @@ public class CanvaShape {
                 this.selected = !this.selected;
             }
         }
+        else if (shape.equals("ellipse")) {
+            final double lowerX = Math.min(firstPoint.getX() - difX, secondPoint.getX() - difX);
+            final double higherX = Math.max(firstPoint.getX() - difX, secondPoint.getX() - difX);
+
+            final double radius = higherX-lowerX;
+
+            Point3D upperLeft = new Point3D(firstPoint.getX() - difX, firstPoint.getY() - difY, 0);
+            Point3D circleCenter = new Point3D(upperLeft.getX() + (radius/2), upperLeft.getY() + (radius/2), 0);
+
+            boolean dist = Math.pow((point.getX()-circleCenter.getX()),2)/Math.pow(radius/2, 2) +
+                    Math.pow((point.getY()-circleCenter.getY()),2)/Math.pow(radius/2,2) <= 1;
+
+            if (dist) {
+                System.out.println("selected");
+                this.selected = !this.selected;
+            }
+        }
 
         drawingShape(gc);
     }
@@ -135,5 +155,13 @@ public class CanvaShape {
             this.difX = difX;
             this.difY = difY;
         }
+    }
+
+    public void updateDif() {
+        this.firstPoint = new Point3D(firstPoint.getX() - difX, firstPoint.getY() - difY, 0);
+        this.secondPoint = new Point3D(secondPoint.getX() - difX, secondPoint.getY() - difY, 0);
+        this.difY = 0;
+        this.difX = 0;
+        this.selected = false;
     }
 }

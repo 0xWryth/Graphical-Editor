@@ -61,6 +61,13 @@ public class Controller implements Initializable {
         System.out.println("end of capture of mouse pos");
         this.lastDrawnId++;
         this.captureMousePos = false;
+
+        if (!this.mode.equals("selectMoveRadio")) {
+            for (CanvaShape o : canvaObj) {
+                o.updateDif();
+            }
+            drawing();
+        }
     }
 
     public void mouseDragged(MouseEvent mouseEvent) {

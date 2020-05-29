@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Clone implements Task {
     private ArrayList<Integer> addedIndex = new ArrayList<Integer>();
+    ArrayList<CanvaShape> canvaObj;
 
     @Override
     public void execute(Object[] data) {
@@ -30,7 +31,7 @@ public class Clone implements Task {
             }
 
             ArrayList<CanvaShape> futureCanvaObj = new ArrayList<CanvaShape>();
-            ArrayList<CanvaShape> canvaObj = (ArrayList<CanvaShape>) data[1];
+            canvaObj = (ArrayList<CanvaShape>) data[1];
             for (CanvaShape o : canvaObj) {
                 if (o.isSelected()) {
                     CanvaShape cs = new CanvaShape(o, (Integer) data[2] + clonedId);
@@ -50,8 +51,24 @@ public class Clone implements Task {
     }
 
     @Override
-    public void undo() {
+    public ArrayList<CanvaShape> undo() {
+        ArrayList<CanvaShape> futureCanvaObj = new ArrayList<>();
+        for (CanvaShape canvaShape : canvaObj) {
+            boolean flag = false;
+            int index = 0;
+            while (flag == false && index < addedIndex.size()) {
+                if (canvaShape.getId() == addedIndex.get(index)) {
+                    flag = true;
+                }
+                index++;
+            }
 
+            if (!flag) {
+                futureCanvaObj.add(canvaShape);
+            }
+        }
+        System.out.println("Undoing clone");
+        return futureCanvaObj;
     }
 
     @Override

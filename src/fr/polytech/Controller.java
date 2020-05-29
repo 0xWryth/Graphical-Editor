@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import fr.polytech.Tasks.Adding;
 import fr.polytech.Tasks.Clone;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -36,6 +39,8 @@ public class Controller implements Initializable {
 
     private ArrayList<CanvaShape> canvaObj = new ArrayList<CanvaShape>();
     private Integer lastDrawnId = 0;
+
+    private History history = new History();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,20 +98,8 @@ public class Controller implements Initializable {
 
     private void addingShape() {
         if (this.captureMousePos) {
-            // If the captured object is already added
-            if (canvaObj.size() - 1 == this.lastDrawnId) {
-                this.canvaObj.get(lastDrawnId).updatePoints(firstPoint, secondPoint);
-            }
-            else {
-                String shape = this.mode.equals("rectangleRadio") ? "rectangle" :
-                        this.mode.equals("lineRadio") ? "line" :
-                        this.mode.equals("ellipseRadio") ? "ellipse" : "";
-                if (!shape.equals(""))
-                {
-                    CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint, filingColor);
-                    this.canvaObj.add(cs);
-                }
-            }
+            Object[] data = {"adding", this.canvaObj, this.lastDrawnId, this.mode, firstPoint, secondPoint, filingColor};
+            (new Adding()).execute(data);
         }
     }
 
@@ -160,7 +153,15 @@ public class Controller implements Initializable {
 
     public void cloneShape(ActionEvent actionEvent) {
         Object[] data = {"cloning", canvaObj, lastDrawnId};
-        (new Clone()).execute(data);
+        history.clone(data);
         drawing();
+    }
+
+    public void keyTyped(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == KeyCode.Z && keyEvent.isControlDown()) {
+            System.out.println("CTRL + Z !");
+            canvaObj = history.undo();
+            drawing();
+        }
     }
 }

@@ -40,7 +40,10 @@ public class CanvaShape {
     }
 
     private void drawingLine(GraphicsContext gc) {
-        drawingLine(gc, firstPoint, secondPoint, filingColor);
+        Color c = this.selected ? Color.BLUE : filingColor;
+        Point3D fP = new Point3D(firstPoint.getX() - difX, firstPoint.getY() - difY, 0);
+        Point3D sP = new Point3D(secondPoint.getX() - difX, secondPoint.getY() - difY, 0);
+        drawingLine(gc, fP, sP, c);
     }
 
     private void drawingLine(GraphicsContext gc, Point3D a, Point3D b, Color strokeColor) {
@@ -97,6 +100,29 @@ public class CanvaShape {
 
             if (point.getX() >= lowerX && point.getX() <= higherX &&
                 point.getY() >= lowerY && point.getY() <= higherY) {
+                this.selected = !this.selected;
+            }
+        }
+        else if (this.shape.equals("line")) {
+            double m = (secondPoint.getY() - difY - (firstPoint.getY() - difY)) /
+                    (secondPoint.getX() - difX - (firstPoint.getX() - difX));
+
+            // y=mx+p
+            // second.y=m*second.x+p
+            // m*second.x+p-second.y=0
+            // p=-m*second.x+second.y
+
+            double p = -m * secondPoint.getX() - difX + secondPoint.getY() - difY;
+
+            // Ax + By + c = 0
+            // y=mx+p
+            // A = m
+            // b = -1
+            // c = p
+            //d(P,e)=∣∣∣Ax1+By1+CA2+B2
+            double dist = (m * point.getX() - point.getY() + p) / (Math.sqrt(Math.pow(m, 2) + 1));
+
+            if (dist <= 5 && dist >= -5) {
                 this.selected = !this.selected;
             }
         }

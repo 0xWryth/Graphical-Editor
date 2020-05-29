@@ -50,6 +50,11 @@ public class Controller implements Initializable {
         this.captureMousePos = true;
         System.out.println("capturing mouse pos");
         firstPoint = new Point3D(mouseEvent.getX(), mouseEvent.getY(), 0);
+        if (this.mode.equals("selectMoveRadio")) {
+            for (CanvaShape o : canvaObj) {
+                o.selectShape(canvas.getGraphicsContext2D(), firstPoint);
+            }
+        }
     }
 
     public void mouseReleased(MouseEvent mouseEvent) {
@@ -61,8 +66,8 @@ public class Controller implements Initializable {
     public void mouseDragged(MouseEvent mouseEvent) {
         secondPoint = new Point3D(mouseEvent.getX(), mouseEvent.getY(), 0);
 
+        movingShape();
         addingShape();
-
         drawing();
     }
 
@@ -99,5 +104,14 @@ public class Controller implements Initializable {
     public void picker(ActionEvent actionEvent) {
         this.filingColor = colorPicker.getValue();
         System.out.println("Switching to : " + colorPicker.getValue());
+    }
+
+    private void movingShape() {
+        double difX = firstPoint.getX() - secondPoint.getX();
+        double difY = firstPoint.getY() - secondPoint.getY();
+
+        for (CanvaShape o : canvaObj) {
+            o.moveShape(canvas.getGraphicsContext2D(), difX, difY);
+        }
     }
 }

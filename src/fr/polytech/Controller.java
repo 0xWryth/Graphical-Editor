@@ -29,12 +29,11 @@ public class Controller implements Initializable {
     private Point3D firstPoint;
     private Point3D secondPoint;
 
-    private ArrayList<Object> canvaObj = new ArrayList<Object>();
+    private ArrayList<CanvaShape> canvaObj = new ArrayList<CanvaShape>();
     private int lastDrawnId = 0;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+    public void initialize(URL location, ResourceBundle resources) { }
 
     public void setMode(ActionEvent actionEvent) {
         RadioButton rb = (RadioButton) control.getSelectedToggle();
@@ -59,7 +58,6 @@ public class Controller implements Initializable {
 
         addingLineShape();
         drawing();
-        System.out.println(canvaObj.size());
     }
 
     private void drawing() {
@@ -68,32 +66,21 @@ public class Controller implements Initializable {
         // Reseting canvas
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for (Object o : canvaObj) {
-            if (o instanceof Line2D) {
-                Line2D line = (Line2D) o;
-                drawingLine(new Point3D(line.getX1(), line.getY1(), 0), new Point3D(line.getX2(), line.getY2(), 0));
-            }
+        for (CanvaShape o : canvaObj) {
+            o.drawingShape(gc);
         }
-    }
-
-    private void drawingLine(Point3D a, Point3D b) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.beginPath();
-        gc.moveTo(a.getX(), a.getY());
-        gc.lineTo(b.getX(), b.getY());
-        gc.stroke();
     }
 
     private void addingLineShape() {
         if (this.captureMousePos) {
             // If the captured object is already added
             if (canvaObj.size() - 1 == this.lastDrawnId) {
-                Line2D.Double newLine = new Line2D.Double(firstPoint.getX(), firstPoint.getY(), secondPoint.getX(), secondPoint.getY());
-                this.canvaObj.set(lastDrawnId, newLine);
+                this.canvaObj.get(lastDrawnId).updateShape(firstPoint, secondPoint);
             }
             else {
-                this.canvaObj.add(new Line2D.Double(firstPoint.getX(), firstPoint.getY(), secondPoint.getX(), secondPoint.getY()));
+                Line2D line = new Line2D.Double(firstPoint.getX(), firstPoint.getY(), secondPoint.getX(), secondPoint.getY());
+                CanvaShape cs = new CanvaShape(lastDrawnId, line, firstPoint, secondPoint);
+                this.canvaObj.add(cs);
             }
         }
     }

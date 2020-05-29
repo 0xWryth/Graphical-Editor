@@ -11,7 +11,7 @@ le undo-redo. Voici la fenêtre graphique à implementer pour l’application.
 
 # Réalisation
 
-![Image du projet](https://imgur.com/PdpS8Pq)
+![Image du projet](https://i.imgur.com/PdpS8Pq.png)
 
 # Fonctionalités
 

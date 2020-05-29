@@ -123,32 +123,8 @@ public class Controller implements Initializable {
     }
 
     public void deleteShape(ActionEvent actionEvent) {
-        ArrayList<Integer> toDelete = new ArrayList<Integer>();
-        for (CanvaShape o : canvaObj) {
-            if (o.isSelected()) {
-                toDelete.add(o.getId());
-            }
-        }
-
-        ArrayList<CanvaShape> newCanvaObj = new ArrayList<CanvaShape>();
-        int i = 0;
-        for (CanvaShape canvaShape : canvaObj) {
-            boolean flag = false;
-            int index = 0;
-            while (flag == false && index < toDelete.size()) {
-                if (canvaShape.getId() == toDelete.get(index)) {
-                    flag = true;
-                }
-                index++;
-            }
-
-            if (!flag) {
-                newCanvaObj.add(canvaShape);
-            }
-            i++;
-        }
-
-        this.canvaObj = newCanvaObj;
+        Object[] data = {"deleting", this.canvaObj, this.lastDrawnId, this.mode, firstPoint, secondPoint};
+        this.canvaObj = history.deleting(data);
         drawing();
     }
 

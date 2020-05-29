@@ -92,14 +92,16 @@ public class Controller implements Initializable {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         for (CanvaShape o : canvaObj) {
-            o.drawingShape(gc);
+            if (o != null) {
+                o.drawingShape(gc);
+            }
         }
     }
 
     private void addingShape() {
         if (this.captureMousePos) {
             Object[] data = {"adding", this.canvaObj, this.lastDrawnId, this.mode, firstPoint, secondPoint, filingColor};
-            (new Adding()).execute(data);
+            history.adding(data);
         }
     }
 

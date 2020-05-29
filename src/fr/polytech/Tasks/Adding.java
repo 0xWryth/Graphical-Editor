@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class Adding implements Task{
+    ArrayList<CanvaShape> canvaObj;
     Integer addedId;
 
     @Override
@@ -30,7 +31,7 @@ public class Adding implements Task{
                 throw new Exception("You can only provide an adding task");
             }
 
-            ArrayList<CanvaShape> canvaObj = (ArrayList<CanvaShape>) data[1];
+            canvaObj = (ArrayList<CanvaShape>) data[1];
             Integer lastDrawnId = (Integer) data[2];
             String mode = (String) data[3];
             Point3D firstPoint = (Point3D) data[4];
@@ -40,6 +41,7 @@ public class Adding implements Task{
             // If the captured object is already added
             if (canvaObj.size() - 1 == lastDrawnId) {
                 canvaObj.get(lastDrawnId).updatePoints(firstPoint, secondPoint);
+                addedId = lastDrawnId;
             }
             else {
                 String shape = mode.equals("rectangleRadio") ? "rectangle" :
@@ -48,18 +50,31 @@ public class Adding implements Task{
                 if (!shape.equals(""))
                 {
                     CanvaShape cs = new CanvaShape(lastDrawnId, shape, firstPoint, secondPoint, filingColor);
-                    addedId = lastDrawnId;
+                    if (lastDrawnId != null)
+                        addedId = lastDrawnId;
+                    System.out.println(addedId);
                     canvaObj.add(cs);
                 }
             }
         } catch (Exception e) {
             System.err.println(e);
         }
+        System.out.println(addedId);
     }
 
     @Override
     public ArrayList<CanvaShape> undo() {
-        return null;
+        ArrayList<CanvaShape> futureCanvaObj = new ArrayList<>();
+        for (CanvaShape canvaShape : canvaObj) {
+            System.out.println(canvaShape.getId());
+            System.out.println(addedId);
+            if (canvaShape.getId() == addedId) { }
+            else {
+                futureCanvaObj.add(canvaShape);
+            }
+        }
+
+        return futureCanvaObj;
     }
 
     @Override
